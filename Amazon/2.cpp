@@ -7,6 +7,14 @@ Output: 3 (1-index based)
 */
 
 
+/*
+My insights to this probles:
+    - This problem becomes interesting when there are Q queries and a search space is given [L,R].
+    - This problem then can be easily solved using Segment Trees.
+    - This can be a expected follow up.
+*/
+
+
 int GetPosition(vector<int> weight){
     int n=weight.size();
     int leftMax[n], rightMin[n];
