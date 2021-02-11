@@ -1,0 +1,3 @@
+Tech Mahindra - Online Assessment
+You are given a two numbers, 1 <= n <= m <= 10^9. You need to calculate the sum of those numbers which lie in the inclusive range of [n, m] and are divisible by both 3 and 5.
+
