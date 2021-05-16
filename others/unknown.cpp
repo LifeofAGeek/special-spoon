@@ -37,6 +37,7 @@ Subtask 2 :
 #include<bits/stdc++.h>
 using namespace std;
 
+// subtask 2
 void solve(){
     //code goes here
     vector<vector<int>> sticks = {{12,3,10,9,14},{6,5,6,8},{1,2,3,5},{6,9,4}};
@@ -85,6 +86,34 @@ void solve(){
     }
 
     cout<<globalDiff;
+}
+
+// subtask 1
+void solve(vector<vector<int>> &sticks) {
+    vector<pair<int, int>> nums;
+    for (int i = 0; i < sticks.size(); i++) {
+        for (auto& s : sticks[i]) {
+            nums.push_back({s, i});
+        }
+    }
+    sort(begin(nums),end(nums));
+
+    int ans = INT_MAX;
+    int n = nums.size();
+    map<int, int> window;
+
+    for (int r = 0, l = 0; r < n; r++) {
+        window[nums[r].second]++;
+        // window pruning
+        while (l <= r && window.size() == sticks.size()) {
+            ans = min(ans, nums[r].first - nums[l].first);
+            if (--window[nums[l].second] == 0) {
+                window.erase(nums[l].second);
+            }
+            l++;
+        }
+    }
+    cout<<ans;
 }
 
 signed main()
