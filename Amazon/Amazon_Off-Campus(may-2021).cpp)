@@ -1,0 +1,89 @@
+/*
+1. Given a rooted Tree, find the total number of nodes having even valued grandparents.
+2. Number of nodes with even value of k-th ancestor (follow-up).
+*/
+
+#include<bits/stdc++.h>
+using namespace std;
+#define int long long
+
+constexpr int N = 1e5 + 10;
+vector<int> adj[N], hgts[N];
+int intime[N],outtime[N],timer;
+int ans = 0;
+//// approach 1 / //////////////////////////////////////
+void dfs(int x,int p = -1, int gp = -1) {
+    ans += (gp % 2 == 0);
+    for(int c: adj[x]) {
+        if(c == p) continue;
+        dfs(c,x,p);
+    }
+}
+/////////////////////////////////////////////////////
+// approach 2 /////////////////////////////////////////////////
+void dfs_tour(int x, int p = -1) {
+    intime[x] = timer++;
+    for(int c: adj[x]) {
+        if(c == p) continue;
+        dfs_tour(c,x);
+    }
+    outtime[x] = timer;
+}
+ 
+void dfs_height(int x,int p = -1,int h = 0) {
+    hgts[h].emplace_back(x);
+    for(int c: adj[x]) {
+        if(c == p) continue;
+        dfs_height(c, x, h + 1);
+    }
+}
+int calculate_answer() {
+   int k ; // given kth parrent
+   int ans = 0;
+   for(int i = 0 ; i + k < N ; i++) {
+        int j = 0;
+        for(int anc: hgts[i]) {
+            while(j < (int)hgts[i + k].size() 
+                and outtime[hgts[i + k][j]] <= outtime[anc]) {
+                ans += (anc % 2 == 0);
+                j++;
+            }
+        }
+   }
+   return ans;
+} 
+///////////////////////////////////////////////////////
+///// Approach 3 //////////////////////////////////////
+vector<int> backMytrack;
+int k;
+void dfs_smart(int x,int p = -1){
+    backMytrack.emplace_back(x); // append or push_back
+    int bck_sz = backMytrack.size();
+    if(bck_sz > k) {
+        ans += (backMytrack[bck_sz - 1 - k] % 2 == 0);
+    } 
+    for(int c: adj[x]) {
+        if(c == p) continue;
+        dfs_smart(c, x);
+    }
+    backMytrack.pop_back();
+}
+////////////////////////////////////////////////////////////
+void solve(){
+   int n; cin >> n ;
+}
+
+signed main()
+{
+#ifndef ONLINE_JUDGE
+    freopen("input.txt", "r", stdin);
+    freopen("output.txt", "w", stdout);
+#endif
+    int t=1;
+    // cin>>t;
+    while (t--)
+    {
+        solve();
+    }
+    return 0;
+}
